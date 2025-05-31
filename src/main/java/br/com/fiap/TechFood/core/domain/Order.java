@@ -14,4 +14,14 @@ public class Order {
     private List<OrderItem> orderItems = new ArrayList<>();
     //TODO colocar o payment aqui
     private String payment;
+
+    public Order(Long id, User user, BigDecimal total,
+                 OrderStatus status, List<OrderItem> orderItems, String payment) {
+        this.id = id;
+        this.user = user;
+        this.total = total;
+        this.status = status;
+        this.orderItems = orderItems;
+        this.payment = payment;
+    }
 }

@@ -1,5 +1,7 @@
 package br.com.fiap.TechFood.infrastructure.adapters.out.entity;
 
+import br.com.fiap.TechFood.core.domain.Order;
+import br.com.fiap.TechFood.core.domain.OrderItem;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -25,7 +27,12 @@ public class OrderItemEntity {
     private int quantity;
 
     @Deprecated
-    public OrderItemEntity() {}
+    public OrderItemEntity() {
+    }
+
+    public OrderItem getOrderItem() {
+        return new OrderItem(this.price, this.order, this.quantity);
+    }
 
 
 }
