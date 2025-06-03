@@ -1,7 +1,6 @@
 package br.com.fiap.TechFood.infrastructure.adapter.in.product;
 
 import br.com.fiap.TechFood.application.core.domain.product.Product;
-import br.com.fiap.TechFood.application.core.domain.product.ProductCategory;
 import br.com.fiap.TechFood.application.port.PagePort;
 import br.com.fiap.TechFood.application.port.product.ProductServicePort;
 import br.com.fiap.TechFood.application.shared.exception.NotFoundException;
@@ -38,8 +37,7 @@ public class ProductController {
     public ResponseEntity<PagePort<ProductView>> showByCategory(@PathVariable("category") String category,
                                                                 @RequestParam(defaultValue = "0") int page,
                                                                 @RequestParam(defaultValue = "10") int size) {
-        ProductCategory productCategory = ProductCategory.findByName(category).orElseThrow(NotFoundException::new);
-        PagePort<ProductView> productView = productServicePort.findAllByCategory(productCategory, page, size).map(ProductView::from);
+        PagePort<ProductView> productView = productServicePort.findAllByCategory(category, page, size).map(ProductView::from);
         return ResponseEntity.ok(productView);
     }
 
@@ -58,8 +56,7 @@ public class ProductController {
 
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
-        Product product = productServicePort.findById(id).orElseThrow(NotFoundException::new);
-        productServicePort.remove(product);
+        productServicePort.remove(id);
         return ResponseEntity.ok().build();
     }
 }
