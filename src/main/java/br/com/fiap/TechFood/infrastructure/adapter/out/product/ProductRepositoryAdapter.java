@@ -27,30 +27,30 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
 
     @Override
     public Optional<Product> findById(Long id) {
-        return productEntityRepository.findById(id).map(ProductEntity::toProduct);
+        return productEntityRepository.findById(id).map(ProductEntity::getProduct);
     }
 
     @Override
     public Product save(Product product) {
-        return productEntityRepository.save(new ProductEntity(product)).toProduct();
+        return productEntityRepository.save(new ProductEntity(product)).getProduct();
     }
 
     @Override
     public Product update(Long id, Product product) {
         ProductEntity productEntity = productEntityRepository.findById(id).orElseThrow(NotFoundException::new);
         ProductEntity updatedProductEntity = productEntity.updateFrom(product);
-        return productEntityRepository.save(updatedProductEntity).toProduct();
+        return productEntityRepository.save(updatedProductEntity).getProduct();
     }
 
     @Override
     public PagePort<Product> findAll(int page, int size) {
-        Page<Product> products = productEntityRepository.findAll(PageRequest.of(page, size)).map(ProductEntity::toProduct);
+        Page<Product> products = productEntityRepository.findAll(PageRequest.of(page, size)).map(ProductEntity::getProduct);
         return new PageDTO<>(products);
     }
 
     @Override
     public PagePort<Product> findAllByCategory(ProductCategory category, int page, int size) {
-        Page<Product> products = productEntityRepository.findAllByCategory(category, PageRequest.of(page, size)).map(ProductEntity::toProduct);
+        Page<Product> products = productEntityRepository.findAllByCategory(category, PageRequest.of(page, size)).map(ProductEntity::getProduct);
         return new PageDTO<>(products);
     }
 
